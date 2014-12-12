@@ -79,8 +79,8 @@ class AceEditorType extends AbstractType
         ));
 
         $resolver->setAllowedTypes(array(
-            'width' => 'array',
-            'height' => 'array',
+            'width' => 'integer',
+            'height' => 'integer',
             'mode' => 'string',
             'font_size' => 'integer',
             'tab_size' => array('integer', 'null'),
