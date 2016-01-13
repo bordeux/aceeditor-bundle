@@ -46,14 +46,6 @@ class AceEditorExtension extends \Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getName()
@@ -67,12 +59,14 @@ class AceEditorExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            'include_ace_editor' => new \Twig_Function_Method($this, 'includeAceEditor', ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('include_ace_editor', [$this, 'includeAceEditor'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
     }
 
-    public function includeAceEditor()
+    public function includeAceEditor(\Twig_Environment $environment)
     {
+        $this->environment = $environment;
+
         $extension = $this->checkExtensionCompatibility();
 
         if (!$this->editorIncluded) {
