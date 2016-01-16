@@ -22,27 +22,20 @@ class AceEditorExtension extends \Twig_Extension
      * @var boolean
      */
     protected $editorIncluded;
-
-    /**
-     * @var string
-     */
-    protected $basePath;
-
-    /**
-     * @var string
-     */
-    protected $mode;
-
     /**
      * @var \Twig_Environment
      */
     private $environment;
 
-    public function __construct($autoinclude, $basePath, $mode)
+    /**
+     * @var string
+     */
+    protected $libUrl;
+
+    public function __construct($autoinclude, $libUrl)
     {
         $this->ckeditorIncluded = $autoinclude;
-        $this->basePath = rtrim($basePath, '/');
-        $this->mode = ltrim($mode, '/');
+        $this->libUrl = $libUrl;
     }
 
     /**
@@ -73,14 +66,10 @@ class AceEditorExtension extends \Twig_Extension
             $this->editorIncluded = true;
         }
 
-        if (!$this->ckeditorIncluded) {
-            $jsPath = $this->environment
-                ->getExtension($extension)
-                ->getAssetUrl($this->basePath . '/' . $this->mode);
-
-            echo sprintf('<script src="%s" charset="utf-8"></script>', $jsPath);
+       // if (!$this->editorIncluded) {
+            echo sprintf('<script src="%s" charset="utf-8"></script>', $this->libUrl);
             $this->ckeditorIncluded = true;
-        }
+       // }
     }
 
     /**

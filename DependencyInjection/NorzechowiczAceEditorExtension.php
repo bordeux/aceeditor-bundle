@@ -38,10 +38,8 @@ class NorzechowiczAceEditorExtension extends Extension
 
     private function registerAceEditorParameters($config, ContainerBuilder $container)
     {
-        $mode = 'src' . (($config['debug']) ? '' : '-min') . (($config['noconflict']) ? '-noconflict' : '') . '/ace.js';
-
+        $libUrl = "//cdn.rawgit.com/ajaxorg/ace-builds/master/src".(($config['debug']) ? '' : '-min') . (($config['noconflict']) ? '-noconflict' : '')."/ace.js";
         $container->setParameter('norzechowicz_ace_editor.options.autoinclude', !$config['autoinclude']);
-        $container->setParameter('norzechowicz_ace_editor.options.base_path', $config['base_path']);
-        $container->setParameter('norzechowicz_ace_editor.options.mode', $mode);
+        $container->setParameter('norzechowicz_ace_editor.options.lib_url', $libUrl);
     }
 }
