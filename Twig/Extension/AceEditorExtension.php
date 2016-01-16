@@ -11,8 +11,6 @@
 
 namespace Norzechowicz\AceEditorBundle\Twig\Extension;
 
-use Symfony\Component\Asset\Exception\InvalidArgumentException;
-
 /**
  * @author Norbert Orzechowicz <norbert@fsi.pl>
  */
@@ -60,8 +58,6 @@ class AceEditorExtension extends \Twig_Extension
     {
         $this->environment = $environment;
 
-        $extension = $this->checkExtensionCompatibility();
-
         if (!$this->editorIncluded) {
             $this->editorIncluded = true;
         }
@@ -70,30 +66,5 @@ class AceEditorExtension extends \Twig_Extension
             echo sprintf('<script src="%s" charset="utf-8"></script>', $this->libUrl);
             $this->ckeditorIncluded = true;
        // }
-    }
-
-    /**
-     * Check that you have a compatible extension
-     *
-     * @return string The compatible extension
-     * @throw InvalidArgumentException When can not found a compatible extension
-     */
-    private function checkExtensionCompatibility()
-    {
-        $extensions = ['assets', 'asset'];
-        $has = false;
-        $extension = '';
-        foreach ($extensions as $ext) {
-            if ($this->environment->hasExtension($ext)) {
-                $has = true;
-                $extension = $ext;
-            }
-        }
-
-        if (!$has && $extension === '') {
-            throw new InvalidArgumentException('Can not found a compatible extension');
-        }
-
-        return $extension;
     }
 }
